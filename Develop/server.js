@@ -1,56 +1,40 @@
-var express = require("express");
-var path = require("path");
+// ==============================================================================
+// DEPENDENCIES
+// Series of npm packages that we will use to give our server useful functionality
+// ==============================================================================
 
+var express = require("express");
+
+// ==============================================================================
+// EXPRESS CONFIGURATION
+// This sets up the basic properties for our express server
+// ==============================================================================
+
+// Tells node that we are creating an "express" server
 var app = express();
+
+// Sets an initial port. We"ll use this later in our listener
 var PORT = 3000;
 
-//middleware
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// ================================================================================
+// ROUTER
+// The below points our server to a series of "route" files.
+// These routes give our server a "map" of how to respond when users visit or request data from various URLs.
+// ================================================================================
 
-// Routes
-// ===========================================================
+require("./routes/apiRoutes.js")(app);
+require("../Develop/routes/htmlRoutes.js")(app);
 
-//
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/index.html"));
-});
+// =============================================================================
+// LISTENER
+// The below code effectively "starts" our server
+// =============================================================================
 
-
-app.get("/notes", function(req, res) {
-    res.sendFile(path.join(__dirname, "./public/notes.html"));
-  });
-
-
-//Get Api 
-app.get("/api/", function(req, res) {
-    res.send("THIS IS THE API");
-  });
-
-//Post Api
-app.get("/api/notes", function(req, res) {
-//   res.json(yoda);
-res.send("API/NOTES");
-});
-
-//Delete Api
-app.get("/api/notes/:id", function(req, res) {
-//   res.json(darthmaul);
-res.send("API/NOTES/ID/");
-});
-
-// Create a new Express route that leads users to the new Obi Wan Kenobi Data
-// Follow the same format as the Yoda and Darth Maul routes
-//
-
-// YOUR CODE GOES HERE
-//
-//
-
-// Listener
-// ===========================================================
 app.listen(PORT, function() {
-  console.log("App listening on PORT " + PORT);
+  console.log("App listening on PORT: " + PORT);
 });
+
