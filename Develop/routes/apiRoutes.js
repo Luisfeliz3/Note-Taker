@@ -1,21 +1,52 @@
+// API routes
 
-const store = require("../db/store");
-const router = require('express').Router();
+module.exports = function(app, fs) {
 
-
-
-module.exports = function (app) {
-
-  app.get("/api", (req, res) => {
-    // res.sendFile(path.join(__dirname, "../public/notes.html"));
-
+  let notesDB = require("../db/db.json");
+  const dataPath = "./db/db.json";
+  // read file
+  app.get("/api/notes", (req, res) => {
+      fs.readFile(dataPath, "utf8", (err, data) => {
+          if (err) {
+          throw err;
+      }
+      res.send(JSON.parse(data));
+      });
   });
 
-  app.get("/api/:id", (req, res) => {
-    // res.sendFile(path.join(__dirname, "../public/index.html"));
+  app.post("/api/notes", (req, res) => {
+      
+      var newNote = req.body;
+      var id = (notesDB.length).toString();
+      newNote.id = id;
 
+      notesDB.push(newNote);
+      
+      // res.json(true);
+      res.json(newNote);
 
+      console.log(notesDB);
 
+      fs.writeFileSync("../db/db.json", JSON.stringify(notesDB, null, 2));
+      res.json(notesDB);
   });
 
-};
+  app.delete("/api/notes/:id", (req, res) => {
+
+  let savedNotes = JSON.parse(fs.readFileSync("../db/db.json", "utf8"));
+  let noteID = req.params.id;
+  let newID = 0;
+  
+  savedNotes = savedNotes.filter(currentNote => {
+      return currentNote.id != noteID;
+  })
+  
+  for (currentNote of savedNotes) {
+      currentNote.id = newID.toString();
+      newID++;
+  }
+
+  fs.writeFileSync("../db/db.json", JSON.stringify(savedNotes, null, 2));
+  res.json(savedNotes);
+  })
+}

@@ -20,7 +20,7 @@ const saveNote = (note) => {
   return $.ajax({
     url: "/api/notes",
     data: note,
-    method: "POST",
+    method: "POST",X
   });
 };
 
@@ -38,7 +38,7 @@ const renderActiveNote = () => {
 
   if (activeNote.id) {
     $noteTitle.attr("readonly", true);
-    $noteText.attr("readonly", true);
+    $noteText.attr("readonly", true);X
     $noteTitle.val(activeNote.title);
     $noteText.val(activeNote.text);
   } else {
