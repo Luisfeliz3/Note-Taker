@@ -3,7 +3,7 @@
 module.exports = function(app, fs) {
 
   let notesDB = require("../db/db.json");
-  let dataPath = "../db/db.json";
+  let dataPath = "./db/db.json";
   // read file
   app.get("/api/notes", (req, res) => {
       fs.readFile(dataPath, "utf8", (err, data) => {
