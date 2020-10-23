@@ -27,26 +27,31 @@ module.exports = function(app, fs) {
 
       console.log(notesDB);
 
-      fs.writeFileSync("../db/db.json", JSON.stringify(notesDB, null, 2));
+      fs.writeFileSync(dataPath, JSON.stringify(notesDB, null, 2));
       res.json(notesDB);
   });
 
-  app.delete("/api/notes/:id", (req, res) => {
+app.delete("/api/notes/:id", (req, res) => {
 
-  let savedNotes = JSON.parse(fs.readFileSync("../db/db.json", "utf8"));
-  let noteID = req.params.id;
-  let newID = 0;
-  
-  savedNotes = savedNotes.filter(currentNote => {
-      return currentNote.id != noteID;
-  })
-  
-  for (currentNote of savedNotes) {
+let savedNotes = JSON.parse(fs.readFileSync(dataPath, "utf8",err => {
+if (err) throw err;
+
+}));
+
+
+let noteID = req.params.id;
+let newID = 0;
+
+savedNotes = savedNotes.filter(currentNote => {
+return currentNote.id != noteID;
+})
+
+for (currentNote of savedNotes) {
       currentNote.id = newID.toString();
       newID++;
-  }
+}
 
-  fs.writeFileSync("../db/db.json", JSON.stringify(savedNotes, null, 2));
+  fs.writeFileSync(dataPath, JSON.stringify(savedNotes, null, 2));
   res.json(savedNotes);
   })
 }
