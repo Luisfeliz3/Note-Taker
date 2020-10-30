@@ -4,8 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "echo \"Error: no test specified\" cd Develop node server.js"
   },
   "author": "",
   "license": "ISC",
