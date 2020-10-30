@@ -38,7 +38,7 @@ const renderActiveNote = () => {
 
   if (activeNote.id) {
     $noteTitle.attr("readonly", true);
-    $noteText.attr("readonly", true);X
+    $noteText.attr("readonly", true);
     $noteTitle.val(activeNote.title);
     $noteText.val(activeNote.text);
   } else {
@@ -76,7 +76,7 @@ const handleNoteDelete = function (event) {
     activeNote = {};
   }
 
-  deleteNote(note.id).then(() => {
+    deleteNote(note.id).then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });

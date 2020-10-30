@@ -16,11 +16,12 @@ module.exports = function (app, fs) {
   app.post("/api/notes", (req, res) => {
     var newNote = req.body;
     var id = notesDB.length.toString();
+    console.log(id + newNote.id + '<<<<<<<<<<-------------');
     newNote.id = id;
-    notesDB.push(newNote);
-    res.json(newNote);
-    fs.writeFileSync(dataPath, JSON.stringify(notesDB, null, 2));
-    res.json(notesDB);
+    // notesDB.push(newNote);
+    // res.json(newNote);
+    // fs.writeFileSync(dataPath, JSON.stringify(notesDB, null, 2));
+    // res.json(notesDB);
   });
 
   app.delete("/api/notes/:id", (req, res) => {
